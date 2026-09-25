@@ -105,8 +105,11 @@ const SkinAnalysisResult = () => {
         </div>
       </div>
 
-      <div className="text-center">
-        <Link to="/dashboard" className="text-indigo-600 font-medium hover:text-indigo-800 transition">
+      <div className="text-center space-y-4 flex flex-col items-center">
+        <Link to="/recommendations" className="bg-indigo-600 text-white font-medium py-3 px-8 rounded-full shadow-sm hover:bg-indigo-700 transition w-full sm:w-auto">
+          View My Personalized Routine
+        </Link>
+        <Link to="/dashboard" className="text-gray-500 font-medium hover:text-gray-800 transition block">
           &larr; Back to Dashboard
         </Link>
       </div>

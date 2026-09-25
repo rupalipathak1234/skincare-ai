@@ -22,14 +22,19 @@ const Dashboard = () => {
           
           <div className="bg-purple-50 rounded-xl p-6 border border-purple-100 flex flex-col justify-center items-center text-center">
             <div className="text-4xl mb-3">✨</div>
-            <h3 className="text-lg font-semibold text-purple-900 mb-2">No Analysis Yet</h3>
-            <p className="text-sm text-purple-800 mb-4">Ready to discover your skin type?</p>
-            <Link to="/analyze" className="bg-purple-600 hover:bg-purple-700 text-white font-medium py-2 px-6 rounded-full transition duration-300">
-              Start Assessment
-            </Link>
-            <Link to="/analyze/result" className="mt-3 text-sm text-purple-600 hover:text-purple-800 font-medium underline">
-              View Latest Result
-            </Link>
+            <h3 className="text-lg font-semibold text-purple-900 mb-2">Your Skincare Plan</h3>
+            <p className="text-sm text-purple-800 mb-4">Access your personalized routine or retake the assessment.</p>
+            <div className="flex flex-col w-full px-4 sm:px-8 space-y-3">
+              <Link to="/recommendations" className="bg-purple-600 hover:bg-purple-700 text-white font-medium py-2 px-6 rounded-full transition duration-300">
+                View My Routine
+              </Link>
+              <Link to="/analyze" className="bg-white border border-purple-200 hover:bg-purple-50 text-purple-700 font-medium py-2 px-6 rounded-full transition duration-300">
+                Analyze My Skin
+              </Link>
+              <Link to="/photo-analysis" className="bg-white border border-indigo-200 hover:bg-indigo-50 text-indigo-700 font-medium py-2 px-6 rounded-full transition duration-300">
+                Analyze Skin Photo 📸
+              </Link>
+            </div>
           </div>
         </div>
       </div>
