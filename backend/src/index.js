@@ -25,6 +25,7 @@ if (process.env.MONGO_URI) {
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/skin-analysis', require('./routes/analysisRoutes'));
 app.use('/api/recommendations', require('./routes/recommendationRoutes'));
+app.use('/api/photo-analysis', require('./routes/photoAnalysisRoutes'));
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
