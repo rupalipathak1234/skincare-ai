@@ -1,4 +1,5 @@
 import { useAuth } from '../contexts/AuthContext';
+import { Link } from 'react-router-dom';
 
 const Dashboard = () => {
   const { user } = useAuth();
@@ -23,9 +24,12 @@ const Dashboard = () => {
             <div className="text-4xl mb-3">✨</div>
             <h3 className="text-lg font-semibold text-purple-900 mb-2">No Analysis Yet</h3>
             <p className="text-sm text-purple-800 mb-4">Ready to discover your skin type?</p>
-            <button className="bg-purple-600 hover:bg-purple-700 text-white font-medium py-2 px-6 rounded-full transition duration-300">
+            <Link to="/analyze" className="bg-purple-600 hover:bg-purple-700 text-white font-medium py-2 px-6 rounded-full transition duration-300">
               Start Assessment
-            </button>
+            </Link>
+            <Link to="/analyze/result" className="mt-3 text-sm text-purple-600 hover:text-purple-800 font-medium underline">
+              View Latest Result
+            </Link>
           </div>
         </div>
       </div>

@@ -5,6 +5,8 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
+import Analyze from './pages/Analyze';
+import SkinAnalysisResult from './pages/SkinAnalysisResult';
 
 const PrivateRoute = ({ children }) => {
   const { user, loading } = useAuth();
@@ -24,6 +26,16 @@ function App() {
             <Route path="dashboard" element={
               <PrivateRoute>
                 <Dashboard />
+              </PrivateRoute>
+            } />
+            <Route path="analyze" element={
+              <PrivateRoute>
+                <Analyze />
+              </PrivateRoute>
+            } />
+            <Route path="analyze/result" element={
+              <PrivateRoute>
+                <SkinAnalysisResult />
               </PrivateRoute>
             } />
           </Route>
