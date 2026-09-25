@@ -1,13 +1,18 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 const connectDB = require('./config/db');
 
 const app = express();
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: true, // Dynamically allows the requesting origin (e.g. localhost:5173, 127.0.0.1:5173)
+  credentials: true
+}));
 app.use(express.json());
+app.use(cookieParser());
 
 // Database connection (uncomment when MongoDB URI is set)
 if (process.env.MONGO_URI) {
@@ -15,6 +20,9 @@ if (process.env.MONGO_URI) {
 } else {
   console.log('Skipping MongoDB connection (MONGO_URI not set)');
 }
+
+// Routes
+app.use('/api/auth', require('./routes/authRoutes'));
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
