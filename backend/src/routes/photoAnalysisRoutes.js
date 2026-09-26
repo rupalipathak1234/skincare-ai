@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { protect } = require('../middlewares/authMiddleware');
-const { analyzePhoto, uploadMiddleware } = require('../controllers/photoAnalysisController');
+const { analyzePhoto, uploadMiddleware, getHistory, getAnalysisById } = require('../controllers/photoAnalysisController');
 
 router.post('/analyze', protect, (req, res, next) => {
   uploadMiddleware(req, res, (err) => {
@@ -11,5 +11,8 @@ router.post('/analyze', protect, (req, res, next) => {
     next();
   });
 }, analyzePhoto);
+
+router.get('/history', protect, getHistory);
+router.get('/:id', protect, getAnalysisById);
 
 module.exports = router;

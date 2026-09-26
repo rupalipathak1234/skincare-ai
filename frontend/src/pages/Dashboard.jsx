@@ -25,6 +25,9 @@ const Dashboard = () => {
             <h3 className="text-lg font-semibold text-purple-900 mb-2">Your Skincare Plan</h3>
             <p className="text-sm text-purple-800 mb-4">Access your personalized routine or retake the assessment.</p>
             <div className="flex flex-col w-full px-4 sm:px-8 space-y-3">
+              <Link to="/skin-journey" className="bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white font-medium py-2 px-6 rounded-full transition duration-300 shadow-sm">
+                My Skin Journey 🚀
+              </Link>
               <Link to="/recommendations" className="bg-purple-600 hover:bg-purple-700 text-white font-medium py-2 px-6 rounded-full transition duration-300">
                 View My Routine
               </Link>
@@ -35,6 +38,7 @@ const Dashboard = () => {
                 Analyze Skin Photo 📸
               </Link>
             </div>
+
           </div>
         </div>
       </div>

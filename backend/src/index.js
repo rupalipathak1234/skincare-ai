@@ -26,6 +26,7 @@ app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/skin-analysis', require('./routes/analysisRoutes'));
 app.use('/api/recommendations', require('./routes/recommendationRoutes'));
 app.use('/api/photo-analysis', require('./routes/photoAnalysisRoutes'));
+app.use('/api/skin-journey', require('./routes/journeyRoutes'));
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {

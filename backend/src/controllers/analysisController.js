@@ -41,3 +41,32 @@ exports.getLatestAnalysis = async (req, res) => {
     res.status(500).json({ message: 'Server error fetching analysis.' });
   }
 };
+
+exports.getHistory = async (req, res) => {
+  try {
+    const history = await SkinAnalysis.find({ userId: req.user.id })
+      .select('-answers') // Optionally exclude answers to save bandwidth if not needed
+      .sort({ completedAt: -1 })
+      .limit(20);
+    
+    res.status(200).json(history);
+  } catch (error) {
+    console.error('Fetch analysis history error:', error);
+    res.status(500).json({ message: 'Server error fetching analysis history.' });
+  }
+};
+
+exports.getAnalysisById = async (req, res) => {
+  try {
+    const analysis = await SkinAnalysis.findOne({ _id: req.params.id, userId: req.user.id });
+    
+    if (!analysis) {
+      return res.status(404).json({ message: 'Analysis not found' });
+    }
+
+    res.status(200).json(analysis);
+  } catch (error) {
+    console.error('Fetch analysis by ID error:', error);
+    res.status(500).json({ message: 'Server error fetching analysis.' });
+  }
+};

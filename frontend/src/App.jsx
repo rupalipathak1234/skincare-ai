@@ -9,6 +9,9 @@ import Analyze from './pages/Analyze';
 import SkinAnalysisResult from './pages/SkinAnalysisResult';
 import Recommendations from './pages/Recommendations';
 import PhotoAnalysis from './pages/PhotoAnalysis';
+import SkinJourney from './pages/SkinJourney';
+import SkinAnalysisHistoryDetail from './pages/SkinAnalysisHistoryDetail';
+import PhotoAnalysisHistoryDetail from './pages/PhotoAnalysisHistoryDetail';
 
 const PrivateRoute = ({ children }) => {
   const { user, loading } = useAuth();
@@ -48,6 +51,21 @@ function App() {
             <Route path="photo-analysis" element={
               <PrivateRoute>
                 <PhotoAnalysis />
+              </PrivateRoute>
+            } />
+            <Route path="skin-journey" element={
+              <PrivateRoute>
+                <SkinJourney />
+              </PrivateRoute>
+            } />
+            <Route path="skin-journey/skin/:id" element={
+              <PrivateRoute>
+                <SkinAnalysisHistoryDetail />
+              </PrivateRoute>
+            } />
+            <Route path="skin-journey/photo/:id" element={
+              <PrivateRoute>
+                <PhotoAnalysisHistoryDetail />
               </PrivateRoute>
             } />
           </Route>

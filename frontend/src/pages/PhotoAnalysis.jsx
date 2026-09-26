@@ -68,8 +68,12 @@ const PhotoAnalysis = () => {
     <div className="max-w-4xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
       <div className="text-center mb-10">
         <h1 className="text-3xl font-extrabold text-gray-900 mb-2">Analyze Your Skin Photo</h1>
-        <p className="text-gray-500">Upload a clear, front-facing photo of your face for AI-assisted visual observations.</p>
+        <p className="text-gray-500 mb-2">Upload a clear, front-facing photo of your face for AI-assisted visual observations.</p>
+        <p className="text-xs font-medium text-indigo-600 bg-indigo-50 inline-block px-3 py-1 rounded-full border border-indigo-100">
+          🔒 Your uploaded photo is processed temporarily for analysis. The photo itself is not stored.
+        </p>
       </div>
+
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {/* Upload Section */}
