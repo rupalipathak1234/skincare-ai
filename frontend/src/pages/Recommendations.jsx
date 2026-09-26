@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import api from '../services/api';
+import { useToast } from '../contexts/ToastContext';
 
 const Recommendations = () => {
   const [recommendation, setRecommendation] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const { showToast } = useToast();
 
   useEffect(() => {
     const fetchRecommendation = async () => {
@@ -14,9 +16,13 @@ const Recommendations = () => {
         setRecommendation(res.data);
       } catch (err) {
         if (err.response?.status === 404) {
-          setError('No skin analysis found. Please complete the questionnaire first.');
+          const msg = 'No skin analysis found. Please complete the questionnaire first.';
+          setError(msg);
+          showToast(msg, 'warning');
         } else {
-          setError(err.response?.data?.message || 'Failed to load recommendations.');
+          const msg = err.response?.data?.message || 'Failed to load recommendations.';
+          setError(msg);
+          showToast(msg, 'error');
         }
       } finally {
         setLoading(false);

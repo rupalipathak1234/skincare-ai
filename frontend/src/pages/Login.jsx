@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { useToast } from '../contexts/ToastContext';
+import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -9,6 +12,15 @@ const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { login } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+  const { showToast } = useToast();
+
+  useEffect(() => {
+    if (location.state?.message) {
+      showToast(location.state.message, 'success');
+      window.history.replaceState({}, document.title);
+    }
+  }, [location, showToast]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -17,9 +29,12 @@ const Login = () => {
 
     try {
       await login(email, password);
+      showToast('Logged in successfully', 'success');
       navigate('/dashboard');
     } catch (err) {
-      setError(err.response?.data?.message || 'Failed to login');
+      const msg = err.response?.data?.message || 'Failed to login';
+      setError(msg);
+      showToast(msg, 'error');
     } finally {
       setIsLoading(false);
     }

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import api from '../services/api';
+import { useToast } from '../contexts/ToastContext';
 
 const questions = [
   {
@@ -67,6 +68,7 @@ const questions = [
 
 const Analyze = () => {
   const navigate = useNavigate();
+  const { showToast } = useToast();
   const [currentStep, setCurrentStep] = useState(0);
   const [answers, setAnswers] = useState({
     q1: '', q2: '', q3: '', q4: '', q5: '', q6: '', q7: '', q8: '', q9: '', q10: []
@@ -124,7 +126,9 @@ const Analyze = () => {
       await api.post('/skin-analysis/questionnaire', { answers });
       navigate('/analyze/result');
     } catch (err) {
-      setError(err.response?.data?.message || 'Failed to submit questionnaire');
+      const msg = err.response?.data?.message || 'Failed to submit questionnaire';
+      setError(msg);
+      showToast(msg, 'error');
       setIsSubmitting(false);
     }
   };

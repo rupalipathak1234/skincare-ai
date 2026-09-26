@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import api from '../services/api';
+import { useToast } from '../contexts/ToastContext';
 
 const SkinAnalysisHistoryDetail = () => {
   const { id } = useParams();
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const { showToast } = useToast();
 
   useEffect(() => {
     const fetchDetail = async () => {
@@ -14,7 +16,9 @@ const SkinAnalysisHistoryDetail = () => {
         const response = await api.get(`/skin-analysis/${id}`);
         setData(response.data);
       } catch (err) {
-        setError('Failed to fetch analysis details.');
+        const msg = 'Failed to fetch analysis details.';
+        setError(msg);
+        showToast(msg, 'error');
       } finally {
         setLoading(false);
       }

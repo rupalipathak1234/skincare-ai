@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
+import { ToastProvider } from './contexts/ToastContext';
 import MainLayout from './layouts/MainLayout';
 import Home from './pages/Home';
 import Login from './pages/Login';
@@ -21,6 +22,7 @@ const PrivateRoute = ({ children }) => {
 
 function App() {
   return (
+    <ToastProvider>
     <AuthProvider>
       <BrowserRouter>
         <Routes>
@@ -72,6 +74,7 @@ function App() {
         </Routes>
       </BrowserRouter>
     </AuthProvider>
+    </ToastProvider>
   );
 }
 

@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import api from '../services/api';
+import { useToast } from '../contexts/ToastContext';
 
 const PhotoAnalysisHistoryDetail = () => {
   const { id } = useParams();
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const { showToast } = useToast();
 
   useEffect(() => {
     const fetchDetail = async () => {
@@ -14,7 +16,9 @@ const PhotoAnalysisHistoryDetail = () => {
         const response = await api.get(`/photo-analysis/${id}`);
         setData(response.data);
       } catch (err) {
-        setError('Failed to fetch photo analysis details.');
+        const msg = 'Failed to fetch photo analysis details.';
+        setError(msg);
+        showToast(msg, 'error');
       } finally {
         setLoading(false);
       }

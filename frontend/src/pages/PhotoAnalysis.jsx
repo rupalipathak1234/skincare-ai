@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import api from '../services/api';
+import { useToast } from '../contexts/ToastContext';
 
 const PhotoAnalysis = () => {
   const [file, setFile] = useState(null);
@@ -8,6 +9,7 @@ const PhotoAnalysis = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [result, setResult] = useState(null);
+  const { showToast } = useToast();
   const fileInputRef = useRef(null);
 
   const handleFileChange = (e) => {
@@ -17,11 +19,15 @@ const PhotoAnalysis = () => {
 
     if (selectedFile) {
       if (!selectedFile.type.startsWith('image/')) {
-        setError('Please select a valid image file (JPEG or PNG).');
+        const msg = 'Please select a valid image file (JPEG or PNG).';
+        setError(msg);
+        showToast(msg, 'warning');
         return;
       }
       if (selectedFile.size > 5 * 1024 * 1024) {
-        setError('File size must be less than 5MB.');
+        const msg = 'File size must be less than 5MB.';
+        setError(msg);
+        showToast(msg, 'warning');
         return;
       }
       setFile(selectedFile);
@@ -57,8 +63,15 @@ const PhotoAnalysis = () => {
         },
       });
       setResult(res.data);
+      if (res.data.success) {
+        showToast('Photo analyzed successfully!', 'success');
+      } else {
+        showToast(res.data.message || 'Analysis completed with warnings', 'warning');
+      }
     } catch (err) {
-      setError(err.response?.data?.message || 'Failed to analyze photo. Please try again.');
+      const msg = err.response?.data?.message || 'Failed to analyze photo. Please try again.';
+      setError(msg);
+      showToast(msg, 'error');
     } finally {
       setLoading(false);
     }

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { useToast } from '../contexts/ToastContext';
 
 const Register = () => {
   const [formData, setFormData] = useState({ name: '', email: '', password: '', confirmPassword: '' });
@@ -8,6 +9,7 @@ const Register = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { register } = useAuth();
   const navigate = useNavigate();
+  const { showToast } = useToast();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
@@ -30,7 +32,9 @@ const Register = () => {
       await register(formData.name, formData.email, formData.password);
       navigate('/login', { state: { message: 'Registration successful! Please login.' } });
     } catch (err) {
-      setError(err.response?.data?.message || 'Failed to register');
+      const msg = err.response?.data?.message || 'Failed to register';
+      setError(msg);
+      showToast(msg, 'error');
     } finally {
       setIsLoading(false);
     }

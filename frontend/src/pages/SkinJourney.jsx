@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import api from '../services/api';
+import { useToast } from '../contexts/ToastContext';
 
 const SkinJourney = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const { showToast } = useToast();
 
   useEffect(() => {
     const fetchJourney = async () => {
@@ -14,7 +16,9 @@ const SkinJourney = () => {
         const response = await api.get('/skin-journey');
         setData(response.data);
       } catch (err) {
-        setError('Failed to fetch skin journey.');
+        const msg = 'Failed to fetch skin journey.';
+        setError(msg);
+        showToast(msg, 'error');
       } finally {
         setLoading(false);
       }
