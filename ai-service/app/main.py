@@ -1,14 +1,17 @@
+import os
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from .routes import analysis
 
 app = FastAPI(title="SkinCare AI Photo Analysis MVP")
 
-# Only allow requests from backend, but for local dev we'll allow all for simplicity.
-# The Node backend handles the frontend CORS.
+# Allow CORS origins based on environment variable, fallback to localhost for development
+allowed_origins_str = os.environ.get("ALLOWED_ORIGINS", "http://localhost:5000,http://127.0.0.1:5000")
+allowed_origins = [origin.strip() for origin in allowed_origins_str.split(",") if origin.strip()]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=allowed_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
