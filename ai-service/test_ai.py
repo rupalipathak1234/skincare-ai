@@ -1,24 +1,28 @@
 import cv2
 import numpy as np
 from app.services.image_analyzer import analyze_image
+from fastapi.testclient import TestClient
+from app.main import app
 
-def test_ai():
-    print("Testing blurry image...")
+client = TestClient(app)
+
+def test_analyze_blurry_image():
     blurry = np.zeros((300, 300, 3), dtype=np.uint8)
     blurry.fill(100) # Flat gray
     res_blur = analyze_image(blurry)
     assert not res_blur["faceDetected"]
     assert "blurry" in res_blur["message"] or "too dark" in res_blur["message"] or not res_blur["success"]
 
-    print("Testing dark image...")
+def test_analyze_dark_image():
     dark = np.zeros((300, 300, 3), dtype=np.uint8)
     dark.fill(10)
     # Add fake variance to pass blur check
     dark[::2, ::2] = 20
     res_dark = analyze_image(dark)
     assert "too dark" in res_dark["message"]
-    
-    print("Testing no face image...")
+    assert not res_dark["success"]
+
+def test_analyze_no_face_image():
     # Good brightness, good variance, no face
     no_face = np.zeros((300, 300, 3), dtype=np.uint8)
     no_face.fill(150)
@@ -28,8 +32,9 @@ def test_ai():
     res_noface = analyze_image(no_face)
     assert "front-facing photo" in res_noface["message"]
     assert not res_noface["faceDetected"]
+    assert not res_noface["success"]
 
-    print("Python AI tests passed!")
-
-if __name__ == "__main__":
-    test_ai()
+def test_health_check_endpoint():
+    response = client.get("/health")
+    assert response.status_code == 200
+    assert response.json() == {"status": "healthy"}
