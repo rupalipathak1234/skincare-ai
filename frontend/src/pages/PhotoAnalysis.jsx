@@ -94,14 +94,16 @@ const PhotoAnalysis = () => {
           <h2 className="text-lg font-bold text-gray-900 mb-4">Upload Photo</h2>
           
           {!preview ? (
-            <div 
-              className="border-2 border-dashed border-gray-300 rounded-xl p-10 flex flex-col items-center justify-center text-center hover:bg-gray-50 transition cursor-pointer"
+            <button 
+              type="button"
+              className="w-full border-2 border-dashed border-gray-300 rounded-xl p-10 flex flex-col items-center justify-center text-center hover:bg-gray-50 transition cursor-pointer focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
               onClick={() => fileInputRef.current?.click()}
+              aria-label="Upload a photo"
             >
-              <span className="text-4xl mb-4">📸</span>
+              <span className="text-4xl mb-4" aria-hidden="true">📸</span>
               <p className="text-sm font-medium text-indigo-600 mb-1">Click to upload a photo</p>
               <p className="text-xs text-gray-500">JPEG or PNG, max 5MB</p>
-            </div>
+            </button>
           ) : (
             <div className="flex flex-col items-center">
               <div className="relative w-full aspect-[3/4] max-w-sm mb-4 rounded-xl overflow-hidden border border-gray-200 shadow-sm">

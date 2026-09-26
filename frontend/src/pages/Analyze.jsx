@@ -170,6 +170,8 @@ const Analyze = () => {
               return (
                 <button
                   key={option}
+                  type="button"
+                  aria-pressed={isSelected}
                   onClick={() => handleOptionClick(option)}
                   className={`w-full text-left px-5 py-4 rounded-xl border transition-all duration-200 ${
                     isSelected 

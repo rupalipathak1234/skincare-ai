@@ -22,7 +22,8 @@ describe('Home Page', () => {
       </BrowserRouter>
     );
     
-    const ctaButton = screen.getByRole('button', { name: /Start Assessment/i });
+    const ctaButton = screen.getByRole('link', { name: /Start Assessment/i });
     expect(ctaButton).toBeInTheDocument();
+    expect(ctaButton).toHaveAttribute('href', '/analyze');
   });
 });
